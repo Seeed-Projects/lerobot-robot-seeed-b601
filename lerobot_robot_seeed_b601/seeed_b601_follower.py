@@ -290,7 +290,7 @@ class SeeedB601FollowerBase(Robot):
 
         # Apply per-joint direction/scale mapping before clipping.
         for motor_name, position in goal_pos.items():
-            direction = self.config.joint_directions.get(motor_name, 0.0)
+            direction = self.config.joint_directions.get(motor_name, 1.0)
             position = position * direction
             # print(f"motor_name: {motor_name}, position: {position}")
             if motor_name in self.config.joint_limits:

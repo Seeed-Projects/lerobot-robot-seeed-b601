@@ -89,9 +89,11 @@ Default motor mapping for the B601 follower:
 
 Make sure your actual motor names, IDs, wiring, and motor models match these defaults before running calibration or teleoperation.
 
+Direction and gripper scale conversion are now owned by the follower integration. For the DM follower, these defaults live in `lerobot_robot_seeed_b601/config_seeed_b601_dm_follower.py`; for the RS follower, they live in `lerobot_robot_seeed_b601/config_seeed_b601_rs_follower.py`.
+
 ## Usage
 
-### Pair a follower with a B601 leader
+### Pair a B601 follower with a reBot Arm 102 leader
 
 ```shell
 lerobot-teleoperate \
@@ -99,11 +101,12 @@ lerobot-teleoperate \
     --robot.id=follower1 \
     --robot.port=/dev/ttyACM4 \
     --robot.can_adapter=damiao \
-    --teleop.type=seeed_b601_dm_leader \
+    --teleop.type=rebot_arm_102_leader \
     --teleop.id=leader1 \
-    --teleop.port=/dev/ttyACM5 \
-    --teleop.can_adapter=damiao
+    --teleop.port=/dev/ttyUSB0
 ```
+
+The leader now outputs unclamped joint positions within its own configured ranges, and the follower applies per-joint direction or scale conversion through `joint_directions` before clipping to follower-side `joint_limits`.
 
 ### Teleoperate with follower cameras
 
@@ -114,10 +117,9 @@ lerobot-teleoperate \
     --robot.port=/dev/ttyACM4 \
     --robot.can_adapter=damiao \
     --robot.cameras="{ up: {type: opencv, index_or_path: /dev/video10, width: 640, height: 480, fps: 30}, side: {type: intelrealsense, serial_number_or_name: 233522074606, width: 640, height: 480, fps: 30}}" \
-    --teleop.type=seeed_b601_dm_leader \
+    --teleop.type=rebot_arm_102_leader \
     --teleop.id=my_b601_leader \
-    --teleop.port=/dev/ttyACM5 \
-    --teleop.can_adapter=damiao \
+    --teleop.port=/dev/ttyUSB0 \
     --display_data=true
 ```
 
