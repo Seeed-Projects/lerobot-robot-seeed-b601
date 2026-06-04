@@ -44,11 +44,32 @@ class SeeedB601DMFollowerConfig(RobotConfig, SeeedB601FollowerConfigBase):
     )
 
 
-    # The v_des parameter for the position-velocity control mode of the joints.
-    pos_vel_velocity: float | list[float] = field(
-        default_factory=lambda: [150, 150, 150, 150, 150, 150, 150]
+    mit_kp: dict[str, float] = field(
+        default_factory=lambda: {
+            "shoulder_pan": 50.0,
+            "shoulder_lift": 500.0,
+            "elbow_flex": 500.0,
+            "wrist_flex": 40.0,
+            "wrist_yaw": 40.0,
+            "wrist_roll": 40.0,
+        }
     )
+
+    mit_kd: dict[str, float] = field(
+        default_factory=lambda: {
+            "shoulder_pan": 3.0,
+            "shoulder_lift": 5.0,
+            "elbow_flex": 5.0,
+            "wrist_flex": 1.5,
+            "wrist_yaw": 1.5,
+            "wrist_roll": 1.5,
+        }
+    )
+
+    # The v_des parameter for the position-velocity control mode of the joints.
+    pos_vel_velocity: float | list[float] = 3600
 
     # Default torque/current ration for gripper's FORCE_POS mode, in range [0,1].
     force_pos_torque_ration: float = 0.1
+
 
