@@ -178,6 +178,11 @@ class SeeedB601FollowerBase(Robot):
 
         self.configure()
 
+        # Skip during the calibrate flow (calibrate=False); the gripper
+        # may not be homed yet and the probe would block connect().
+        if calibrate:
+            self.detect_gripper_zero()
+
         self._build_gravity_pairing()
 
         logger.info(f"{self} connected.")
@@ -253,7 +258,6 @@ class SeeedB601FollowerBase(Robot):
                     time.sleep(MEDIUM_TIMEOUT_SEC)
             logger.info(f"{motor_name} ensure mode {target_mode}")
         self.bus.enable_all()
-        self.detect_gripper_zero()
 
     def disable_torque(self) -> None:
         """Disable follower motor torque so the arm can be moved by hand during read-only debugging."""
