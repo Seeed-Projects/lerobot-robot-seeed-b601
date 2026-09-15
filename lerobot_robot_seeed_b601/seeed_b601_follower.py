@@ -270,7 +270,7 @@ class SeeedB601FollowerBase(Robot):
     def detect_gripper_zero(
         self,
         tolerance_deg: float = 5.0,
-        force_ratio: float = 0.05,
+        force_ratio: float = 0.012,
         mit_tau: float = 0.3,
     ) -> dict:
         if not self.is_connected:
